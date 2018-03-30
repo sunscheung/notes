@@ -167,7 +167,7 @@ composingMethodsDemo.getBasePrice = function () {
     return this._quantity * this._itemPrice;
 };
 ```
-# 用临时变量取代高消耗的查询
+## 用临时变量取代高消耗的查询
 
 信号：多次调用的查询式是一个高消耗的函数
 
@@ -201,7 +201,7 @@ composingMethodsDemo.getBasePrice = function () {
     return parseFloat(document.getElementById('quantity').value) * parseFloat(document.getElementById('itemPrice').value);
 };
 ```
-# 将临时变量内联化
+## 将临时变量内联化
 
 信号：你有一个临时变量，只被一个简单表达式赋值一次，而它妨碍了其他重构手法。
 
@@ -234,7 +234,7 @@ composingMethodsDemo.getBasePrice = function () {
     return this._quantity * this._itemPrice;
 };
 ```
-# 引入解释性变量
+## 引入解释性变量
 
 信号：你有一个复杂的表达式。
 
@@ -297,7 +297,7 @@ composingMethodsDemo.getMacIEVersion = function (platform, browser) {
 };
 ```
 
-# 剖解临时变量
+## 剖解临时变量
 
 信号：你的程序有某个临时变量被赋值超过一次，它既不是循环变量，也不是一个集用临时变量（collecting temporary variable）。
 
@@ -337,7 +337,7 @@ composingMethodsDemo.printRectangleInfo = function (height, width) {
 };
 ```
 
-# 移除对参数的赋值动作
+## 移除对参数的赋值动作
 
 信号：你的代码对一个参数进行赋值动作。
 
@@ -410,7 +410,7 @@ composingMethodsDemo.printPerimeter = function (rectang) {
 };
 ```
 
-# 以函数对象取代函数
+## 以函数对象取代函数
 
 信号：你有一个大型函数，其中对局部变量的使用，使你无法釆用【提取函数】。
 
@@ -418,9 +418,27 @@ composingMethodsDemo.printPerimeter = function (rectang) {
 
 如果一个大型函数，功能比较单一，且局部变量很多，这时候我们没办法采用单纯的【提取函数】方法来重构，这个时候我们就可以把大型函数转换成一个函数对象来处理，然后将函数体分解成小函数。
 
+## 传递对象参数代替过长的参数列表
+```
+var setUser = function(id,name,sex,mobile,qq){
+    console.log(id);
+    console.log(name);
+    console.log(sex);
+    console.log(mobile);
+}
+setUser(1,'sunscheung','male','13****','125***')
 
+//尝试用以下方式
+var setUser = function(obj){
+    console.log(obj.id);
+    console.log(obj.name);
+    console.log(obj.sex);
+    console.log(obj.mobile);
+}
+setUser({id:1,name:'sunscheung',sex:'male',tel:'13****',qq:'125***'})
+```
 
-# 替换你的算法
+## 替换你的算法
 
 信号：把某个算法替换为另一个更清晰的算法。
 
