@@ -21,3 +21,5 @@ prop是从属性对象中取值，属性对象中有多少属性，就能获取�
 对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。快速，准确。
 
 对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
+
+From:[https://blog.csdn.net/wangdachui95345/article/details/53389257]
