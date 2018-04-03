@@ -6,7 +6,7 @@ attr 是从页面搜索获得元素值，所以页面必须明确定义元素才
 $('input:checkbox').attr('type'); 返回checkbox. 
 $('input:checkbox').attr('checked'); 返回undefined。 
 ```
-> 因为<input name='test' type='checkbox'>中没有checked关键字。
+> 因为```<input name='test' type='checkbox'>```中没有checked关键字。
 
 prop是从属性对象中取值，属性对象中有多少属性，就能获取多少值，不需要在页面中显示定义。 
 比如 
