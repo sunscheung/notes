@@ -1,3 +1,4 @@
+```
 let tempKey = 'cid';
 let tempDatas = [{cid:1,name:'sunscheung'},{cid:2,name:'zhangsan'}];
 let newArr = tempDatas.map(
@@ -7,3 +8,4 @@ let newArr = tempDatas.map(
           return keyMapData;
       }
  ); 
+```
