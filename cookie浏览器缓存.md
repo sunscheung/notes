@@ -36,4 +36,4 @@ export default class Cookie {
 }
 ```
 
-[进一步了解Cookie](https://baike.baidu.com/item/cookie/1119?fr=aladdin#14)
+[进一步了解Cookie](https://baike.baidu.com/item/cookie/1119?fr=aladdin)
