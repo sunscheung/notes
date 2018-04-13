@@ -1,7 +1,5 @@
 
 
-
-
 # CSS3动画
 ## CSS3 transition 属性  transition: property duration timing-function delay;
 >transition 属性是一个简写属性，用于设置四个过渡属性：
@@ -30,7 +28,7 @@ transition-delay   //定义过渡效果何时开始
 > transform 属性向元素应用 2D 或 3D 转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜 
 实例:旋转 div 元素：
 `div{transform:rotate(7deg);}`
-
+```
 值	描述	测试
 none	定义不进行转换。	测试
 matrix(n,n,n,n,n,n)	定义 2D 转换，使用六个值的矩阵。	测试
@@ -54,15 +52,17 @@ skew(x-angle,y-angle)	定义沿着 X 和 Y 轴的 2D 倾斜转换。	测试
 skewX(angle)	定义沿着 X 轴的 2D 倾斜转换。	测试
 skewY(angle)	定义沿着 Y 轴的 2D 倾斜转换。	测试
 perspective(n)	为 3D 转换元素定义透视视图。	测试
-
+```
 
 ## CSS3 animation 属性  animation: name duration timing-function delay iteration-count direction;
+```
 animation-name	规定需要绑定到选择器的 keyframe 名称。。
 animation-duration	规定完成动画所花费的时间，以秒或毫秒计。
 animation-timing-function	规定动画的速度曲线。
 animation-delay	规定在动画开始之前的延迟。
 animation-iteration-count	规定动画应该播放的次数。
 animation-direction	规定是否应该轮流反向播放动画。
+```
 实例:使用简写属性，将动画与 div 元素绑定：
 div{
 animation:mymove 5s infinite;
