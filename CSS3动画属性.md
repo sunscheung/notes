@@ -64,7 +64,9 @@ animation-iteration-count	规定动画应该播放的次数。
 animation-direction	规定是否应该轮流反向播放动画。
 ```
 实例:使用简写属性，将动画与 div 元素绑定：
+```
 div{
 animation:mymove 5s infinite;
 -webkit-animation:mymove 5s infinite; /* Safari 和 Chrome */
 }
+```
