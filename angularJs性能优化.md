@@ -9,7 +9,7 @@ XHR响应事件 ($http)
 Timer事件($timeout, $interval)
 执行$digest()或$apply()
 
-https://github.com/sunscheung/notes/blob/master/imgs/o_concepts-runtime.png
+![run](https://github.com/sunscheung/notes/blob/master/imgs/o_concepts-runtime.png)
 
 > 参考《mastering web application development with angularjs》 P294
 
