@@ -1,6 +1,6 @@
 在Angular框架核心之一是一个解析器。解析Angular指令和呈现HTML输出的解析器。
 
-角分析器分三步工作： -
+angularjs分析器分三步工作： -
 
 第1步： - HTML浏览器分析HTML并创建一个DOM（文档对象模型）。
 
