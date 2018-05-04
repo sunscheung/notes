@@ -4,10 +4,11 @@
 > 事件冒泡：事件到达事件目标之后不会结束，会逐层向上冒泡，直至document对象，跟事件捕获相反
  
 1. onlick -->事件冒泡，重写onlick会覆盖之前属性，没有兼容性问题
-   `ele.onclik = null;   //解绑单击事件，将onlick属性设为null即可`
+   ```ele.onclik = null;   //解绑单击事件，将onlick属性设为null即可```
 2. addEventListener(event.type, handle, boolean); IE8及以下不支持，属于DOM2级的方法，可添加多个方法不被覆盖
 ```
-//事件类型没有on，false 表示在事件第三阶段（冒泡）触发，true表示在事件第一阶段（捕获）触发。 如果handle是同一个方法，只执行一次。
+//事件类型没有on，false 表示在事件第三阶段（冒泡）触发，true表示在事件第一阶段（捕获）触发。 
+//如果handle是同一个方法，只执行一次。
 ele.addEventListener('click', function(){ }, false);  
 //解绑事件，参数和绑定一样
 ele.removeEventListener(event.type, handle, boolean);
