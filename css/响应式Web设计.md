@@ -288,8 +288,8 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
 - 非保留的strike、enter、font、acronym、frame 和frameset。
 
 ## HTML5 全新语义化元素(机器识别) 
-
-> 字典中对语义学的定义是“关注语言本质含义的语言学和逻辑学分支学科”.
+```
+字典中对语义学的定义是“关注语言本质含义的语言学和逻辑学分支学科”.
 <section>元素用来定义文档或应用程序中的区域（或节）
 <nav>用来定义文档的主导航区域
 <article>元素用来包裹独立的内容片段
@@ -302,7 +302,7 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
 <header>元素包含对区域内容的介绍说明（不计入大纲结构，不能用于划分内容结构。）
 <footer>元素包含对区域内容的介绍说明（不计入大纲结构，不能用于划分内容结构。）
 <address>元素用于明确地标注离其最近的< article >或< body >祖先元素的联系信息。 
- 
+``` 
 ## HTML5 的大纲结构
 ```
 <hgroup>
@@ -320,21 +320,21 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
     </header>
 </article>
 ```
-## HTML5 文本级语义元素 
-
+## HTML5 文本级语义元素  
+```
 <b>……一小段文本，纯粹为了吸引人的注意，除此之外不传达任何重要性，也不暗示其他语态或语气，
 如文档摘要中的关键词、评论中的产品名称、交互式文本软件中的可操作单词，或者文章的导语。 
 根据过去对< b >标签的用法，很多浏览器仍会将其渲染为粗体。所以你可以根据实际情况在相关的CSS 代码中重定义其默认样式。
 <em>强调内容中的重点。
 <i>一小段有不同语态或语气的文字，或者是样子上与普通文章有所差异以便 
-标明不同特点的文字。 渲染成斜体，可以重写样式
-
-## 遵循WAI-ARIA 实现无障碍站点
+标明不同特点的文字。 渲染成斜体，可以重写样式 
+ ```
+## 遵循WAI-ARIA 实现无障碍站点 
 WAI-ARIA 是Web Accessibility Initiative - Accessible Rich Internet Applications 的缩写，指无障碍网页应用技术，
 它主要解决一个问题：让残障人士能无障碍地访问网页上的动态内容。这种技术提供了一种描述自定义组件（网页应用中的动态片段）的角色、
 状态和属性的方法，这样这些组件就可以被依赖辅助技术的用户找到并加以利用。
 
-## ARIA地标属性：role=”“ 
+## ARIA地标属性：role=”“  
 
 application：用来定义用作网页应用的区域。
 banner：用来定义一个站点级别（而不是某个特定文档的）的区域。如网站的头部和logo。
@@ -346,7 +346,7 @@ navigation：用来定义链向当前文档或相关文档的导航链接。
 search：用来定义一个用于搜索的区域。
 设置样式nav[role=""] {} 
 
-## HTML5 嵌入媒体
+## HTML5 嵌入媒体 
 最初的 HTML5 规范呼吁所有浏览器内置支持使用Ogg 格式①直接播放视频或音频（无需插件）。但是由于HTML5 工作组的内部争议，
 曾经作为基线标准的支持Ogg（包括Theora video 和Vorbis audio）的主张在最近更新的HTML5 规范中被放弃。因此目前的情况是，
 一些浏览器支持某一套视频和音频文件格式，而另一些浏览器则支持其他格式。例如Safari 只允许在和元素中使用MP4/H.264/AAC 媒体文件，
@@ -361,7 +361,8 @@ What, do you mean you don't understand HTML5?
 </video>
 ```
 
-## 针对老版本浏览器的备用方案
+## 针对老版本浏览器的备用方案 
+
 ```
 <video width="640" height="480" controls autoplay preload="auto" loop poster=
 "myVideoPoster.jpg">
@@ -381,10 +382,10 @@ Ogg Format: <a href="myVideo.ogv">"Ogg"</a>
 </p>
 </video>
 ```
-## 响应式视频
- video { max-width: 100%; height: auto; }
+## 响应式视频 
+video { max-width: 100%; height: auto; }
 
-### 能解决使用iframe 嵌入的视频的响应问题
+### 能解决使用iframe 嵌入的视频的响应问题 
 ```
 FitVids文件
 <script>
@@ -394,7 +395,7 @@ $("#content").fitVids();
 });
 </script>
 ```
-## 离线Web 应用
+## 离线Web 应用 
 离线Web应用的运行机制是每个需要离线使用的网页都指定一个后缀名为.manifest 的 
 文本文件。这个文本文件罗列了该网页离线使用时所需的所有资源文件（HTML、图片 
 JavaScript 等等）。支持离线Web 应用的浏览器会自动读取.manifest 文件，下载文件中 
@@ -402,18 +403,20 @@ JavaScript 等等）。支持离线Web 应用的浏览器会自动读取.manifes
 
 `<html lang="en" manifest="/offline.manifest" />`
 
-## 修改.htaccess 文件
+## 修改.htaccess 文件 
 
 `AddType text/cache-manifest .manifest`
 
-### 阻止浏览器缓存 缓存文件offline.manifest
+### 阻止浏览器缓存 缓存文件offline.manifest 
+
 ```
 <Files offline.manifest>
 ExpiresActive On
 ExpiresDefault "access"
 </Files>
 ```
-### offline.manifest 填充内容
+### offline.manifest 填充内容 
+
 ```
 CACHE MANIFEST
 #v1
@@ -436,10 +439,10 @@ FALLBACK:
 manifest 文件必须以CACHE MANIFEST 开头。
 CACHE:部分罗列了所有离线使用所需的文件。这些文件的路径都是相对offline.manifest而言的
 NETWORK:部分罗列了所有不需要被缓存的文件。星号被称为在线白名单通配符。
-FALLBACK:部分使用/字符定义了一个URL 模板。它的作用是访问每个页面时都会问“缓存中有这个页面吗？”，如果有则显示缓存页面，如果没有则显示指定的offline.html 文件。 
-版本号的作用  
-
-> 如果开发者对网站内容或资源做了修改，那么也得通知浏览器更新缓存文件，
+FALLBACK:部分使用/字符定义了一个URL 模板。它的作用是访问每个页面时都会问“缓存中有这个页面吗？”，
+如果有则显示缓存页面，如果没有则显示指定的offline.html 文件。 
+### 版本号的作用  
+如果开发者对网站内容或资源做了修改，那么也得通知浏览器更新缓存文件，
 否则浏览器仍然会使用之前已有的缓存文件。而通知浏览器更新缓存文件的方式通常是更新manifest 文件， 
 浏览器如果发现manifest 文件发生了变化，就会更新缓存文件。大多数情况下manifest 中的缓存文件清单不会发 
 生变化，那我们就通过修改注释的方式来改变manifest 文件，注释中的版本号，既能触发文件变化，又能指明当 
@@ -454,27 +457,30 @@ FALLBACK:
 NETWORK:
 *
 ```
-> 这种方法只会下载和缓存用户访问的HTML 页面， 
-不会缓存页面内引入的图片、JavaScript 或者其他资源文件
+这种方法只会下载和缓存用户访问的HTML 页面， 
+不会缓存页面内引入的图片、JavaScript 或者其他资源文件 
 
 # CSS3：选择器、字体和颜色模式
 ```
 >:子级节点
 +：相邻兄弟节点
 ~：匹配所有节点
-```
-1）id 选择器（#myid）
-2）类选择器（.myclassname）
-3）标签选择器（div，h1，p）
-4）相邻选择器（h1 + p） 相邻兄弟选择器（Adjacent sibling selector）可选择紧接在另一元素后的元素，且二者有相同父元素.
-5）子选择器（ul > li）
-6）后代选择器（li a）
-7）通配符选择器（* ）
-8）属性选择器（ a[rel = "external"]）
-9）伪类选择器（a: hover, li: nth - child）
-10）element1~element2 选择器 element1 之后出现的所有 element2 
+``` 
 
-** 为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。)**
+1）id 选择器（#myid）
+2）类选择器（.myclassname） 
+3）标签选择器（div，h1，p） 
+4）相邻选择器（h1 + p） 相邻兄弟选择器（Adjacent sibling selector）可选择紧接在另一元素后的元素，且二者有相同父元素.
+5）子选择器（ul > li） 
+6）后代选择器（li a） 
+7）通配符选择器（* ）
+8）属性选择器（ a[rel = "external"]） 
+9）伪类选择器（a: hover, li: nth - child） 
+10）element1~element2 选择器 element1 之后出现的所有 element2   
+
+```
+//为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。) 
 `p~ul {background:#ff0000;}`
-** 选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素。 **
+// 选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素。  
  ` h1 + p {margin-top:50px;} `
+ ```
