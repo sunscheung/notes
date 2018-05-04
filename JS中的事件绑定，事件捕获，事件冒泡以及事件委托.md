@@ -129,3 +129,5 @@ function changeStyle(ele){
     ele.style.color = "#fff"; 
 }
 ```
+
+来自：http://www.cnblogs.com/zhangmingze/p/4864367.html
