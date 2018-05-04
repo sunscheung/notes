@@ -60,7 +60,7 @@ h1 { color: green }
 @import url("phone.css") screen and (max-width:360px);
 ```
 ### 使用CSS 的@import 方式会增加HTTP 请求（这会影响加载速度）
-## 通过标签的media 属性为样式表指定设备类型（如显示屏或打印机）。
+### 通过标签的media 属性为样式表指定设备类型（如显示屏或打印机）。
 ```
 非纵向放置的显示屏设备
 <link rel="stylesheet" media="not screen and (orientation: portrait)" href="portraitscreen.
@@ -122,9 +122,9 @@ width: 748px;
 它不能适应未来的变化。
 
 ## 响应式布局：固定布局->流动布局
-> 伊桑·马科特提供一个简易可行的公式，将固定像素宽度转换对应的百分比宽度： 
-（目标元素宽度-边框宽度）÷上下文（父级）元素宽度=百分比宽度 
-注意上下文的对应关系，页面换行显示（ul>li>a问题有可能是li的inline-block没有宽的原因，我们可以使用margin来控，因为宽度不是很灵活）
+> 伊桑·马科特提供一个简易可行的公式，将固定像素宽度转换对应的百分比宽度：（目标
+元素宽度-边框宽度）÷上下文（父级）元素宽度=百分比宽度 注意上下文的对应关系，页面换行
+显示（ul>li>a问题有可能是li的inline-block没有宽的原因，我们可以使用margin来控，因为宽度不是很灵活） 
 ```
 #header {
 margin-right: 10px;
@@ -154,7 +154,8 @@ width: 97.9166667%; /* 940 ÷ 960 */
 - 现代浏览器的默认文字大小都是16 像素 
 - 优点： 
 - 使用Internet Explorer 6 的用户也将能够缩放文字 
-- 以使我们设计师和开发者的生活更简单
+- 以使我们设计师和开发者的生活更简单 
+
 ```
 给body设置
 font-size: 100%;
@@ -206,10 +207,12 @@ max-width: 1414px;
 }
 ```
 为不同的屏幕尺寸提供不同大小的图片
-AdaptiveImages:图片自适应源码工具是一个基于PHP语言编写的图片自适应解决方案，它首先利用一个轻量级的JS文件来探测浏览器的屏幕大小，然后将这个参数发送到服务器端的PHP脚本来对图片进行尺寸调整。 
+AdaptiveImages:图片自适应源码工具是一个基于PHP语言编写的图片自适应解决方案，
+它首先利用一个轻量级的JS文件来探测浏览器的屏幕大小，然后将这个参数发送到服务器端的PHP脚本来对图片进行尺寸调整。 
 实现 Adaptive Images 解决方案需要Apache 2、PHP 5.x 和GD 库，也就是说需要Web 服务器端编程。首先，在其网站上下载.zip 文件开始配置： 
-js被禁用的情况下依然有效 
-1. 解压文件，然后将其中的adaptive-images.php 和.htaccess 文件拷贝到网站的根目录。如果你网站的根目录下已经有一个.htaccess 文件了，不要覆盖它。参考下载包中的instructions.htm 文件看看怎么做合适。
+### js被禁用的情况下依然有效 
+1. 解压文件，然后将其中的adaptive-images.php 和.htaccess 文件拷贝到网站的根目录。如果你网站的根目录下已经
+有一个.htaccess 文件了，不要覆盖它。参考下载包中的instructions.htm 文件看看怎么做合适。
 
 接着在网站根目录下创建一个名为ai-cache 的文件夹。
 然后把如下JavaScript 代码复制到每个需要自适应图片的网页的头部： 
@@ -239,26 +242,25 @@ RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
 流动网格布局和媒体查询的默契配合
 媒体查询约束流动布局的变动范围，而流动布局则简化了从一组媒体查询样式过渡到另一组的改变过程。
 
-HTML5（大家可以看我的另一篇文章）
+## HTML5（大家可以看我的另一篇文章）
 腻子脚本（polyfill）这个词由Remy Sharp 提出，意指使用腻子来补平老版 
 本浏览器的缺陷。因此，腻子脚本具体指的是一段能给老版本浏览器带来 
 新特性的JavaScript 代码。
 
-HTML5 样板文件。样板文件是一个预先做好的融 
+## HTML5 样板文件。样板文件是一个预先做好的融 
 合了“最佳实践”HTML5 文件，包含一些基本样式（如之前提到过的 
 normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含一个 
 自动合并CSS 和JS 文件、自动删除注释以生成生产环境代码的构建工 
 具。强烈推荐！
 
-HTML5 精简主义
+## HTML5 精简主义
 各种脑残写法都可以被浏览器识别 
-**没有结束标签的斜线，没有引号，大小写混杂。甚至，省略元素， 
-页面依然有效**
-
+**没有结束标签的斜线，没有引号，大小写混杂。甚至，省略元素， 页面依然有效** 
+```
 <link href=CSS/main.css rel=stylesheet >
 <div id=wrapper>
 <img SRC=frontCarousel.png aLt=frontCarousel>
- 
+```
 在编写HTML5 文档时我倾向于在老式编写风格（可读性和精简代码找到平衡）
 
 <link href="CSS/main.css" rel="stylesheet"/>
@@ -267,9 +269,7 @@ HTML5 精简主义
 <h2><a href="index.html">The home page</a></h2>
 <p><a href="index.html">This paragraph also links to the home page</a></p>
 <a href="index.html"><img src="home-image.png" alt="home-slice" /></a>
-```
-Make change
-
+//Make change
 <a href="index.html">
 <h2>The home page</h2>
 <p>This paragraph also links to the home page</p>
@@ -279,15 +279,16 @@ Make change
 不能在一个标签中嵌套另一个标签，也不能在标签中嵌套表单。 
 第一句不是很理解，什么意思？
 
-## HTML5 弃其糟粕
+## HTML5 弃其糟粕 
+
 都能使用，不过最好不要用，拥抱未来 
 - 暂保留 
 - <img src="frontCarousel.png" alt="frontCarousel" border="0" /> 
 - 非保留的strike、enter、font、acronym、frame 和frameset。
 
-## HTML5 全新语义化元素(机器识别)
-> 字典中对语义学的定义是“关注语言本质含义的语言学和逻辑学分支学科”.
+## HTML5 全新语义化元素(机器识别) 
 
+> 字典中对语义学的定义是“关注语言本质含义的语言学和逻辑学分支学科”.
 <section>元素用来定义文档或应用程序中的区域（或节）
 <nav>用来定义文档的主导航区域
 <article>元素用来包裹独立的内容片段
@@ -299,7 +300,8 @@ Make change
 <aside>元素用来表示与页面主内容松散相关的内容 
 <header>元素包含对区域内容的介绍说明（不计入大纲结构，不能用于划分内容结构。）
 <footer>元素包含对区域内容的介绍说明（不计入大纲结构，不能用于划分内容结构。）
-<address>元素用于明确地标注离其最近的< article >或< body >祖先元素的联系信息。
+<address>元素用于明确地标注离其最近的< article >或< body >祖先元素的联系信息。 
+ 
 ## HTML5 的大纲结构
 ```
 <hgroup>
@@ -344,7 +346,7 @@ search：用来定义一个用于搜索的区域。
 > 最初的 HTML5 规范呼吁所有浏览器内置支持使用Ogg 格式①直接播放视频或音频（无需插件）。但是由于HTML5 工作组的内部争议，
 曾经作为基线标准的支持Ogg（包括Theora video 和Vorbis audio）的主张在最近更新的HTML5 规范中被放弃。因此目前的情况是，
 一些浏览器支持某一套视频和音频文件格式，而另一些浏览器则支持其他格式。例如Safari 只允许在和元素中使用MP4/H.264/AAC 媒体文件，
-而Firefox 和Opera 则只支持Ogg 和WebM。
+而Firefox 和Opera 则只支持Ogg 和WebM。 
 ```
 在一个标签内支持多种媒体格式
 <video width="640" height="480" controls autoplay preload="auto" loopposter="myVideoPoster.jpg">
@@ -425,7 +427,6 @@ NETWORK:
 FALLBACK:
 //offline.html
 ```
-
 manifest 文件必须以CACHE MANIFEST 开头。
 CACHE:部分罗列了所有离线使用所需的文件。这些文件的路径都是相对offline.manifest而言的
 NETWORK:部分罗列了所有不需要被缓存的文件。星号被称为在线白名单通配符。
@@ -440,7 +441,7 @@ FALLBACK:部分使用/字符定义了一个URL 模板。它的作用是访问每
 ### 页面被自动加载到离线缓存
 ```
 CACHE MANIFEST
-# Cache Manifest v1
+# Cache Manifest v1  
 FALLBACK:
 //offline.html
 NETWORK:
@@ -450,17 +451,28 @@ NETWORK:
 不会缓存页面内引入的图片、JavaScript 或者其他资源文件
 
 # CSS3：选择器、字体和颜色模式
+```
 >:子级节点
 +：相邻兄弟节点
 ~：匹配所有节点
+```
+1）id 选择器（#myid）
+2）类选择器（.myclassname）
+3）标签选择器（div，h1，p）
+4）相邻选择器（h1 + p） 相邻兄弟选择器（Adjacent sibling selector）可选择紧接在另一元素后的元素，且二者有相同父元素.
+5）子选择器（ul > li）
+6）后代选择器（li a）
+7）通配符选择器（* ）
+8）属性选择器（ a[rel = "external"]）
+9）伪类选择器（a: hover, li: nth - child）
+10）element1~element2 选择器 element1 之后出现的所有 element2 
 
-
-
-
-
-
-
-
-
-
-@import url("phone.css") screen and (max-width:360px);
+> 为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。)
+```
+p~ul
+{
+background:#ff0000;
+}
+```
+> “选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素”。
+``` h1 + p {margin-top:50px;} ```
