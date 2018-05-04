@@ -1,12 +1,12 @@
 
 ## 数组扩展
-. Array.from
-. Array.of
-. copyWithin
-. find\findIndex
-. fill
-. entries\keys\values
-. inludes
+1. Array.from
+2. Array.of
+3. copyWithin
+4. find\findIndex
+5. fill
+6. entries\keys\values
+7. inludes
 ### 把一组变量转换成数组类型
 ```
 {
