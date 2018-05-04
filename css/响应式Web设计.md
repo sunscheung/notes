@@ -467,16 +467,16 @@ NETWORK:
 ~：匹配所有节点
 ``` 
 
-1）id 选择器（#myid）
-2）类选择器（.myclassname） 
-3）标签选择器（div，h1，p） 
-4）相邻选择器（h1 + p） 相邻兄弟选择器（Adjacent sibling selector）可选择紧接在另一元素后的元素，且二者有相同父元素.
-5）子选择器（ul > li） 
-6）后代选择器（li a） 
-7）通配符选择器（* ）
-8）属性选择器（ a[rel = "external"]） 
-9）伪类选择器（a: hover, li: nth - child） 
-10）element1~element2 选择器 element1 之后出现的所有 element2   
+1. id 选择器（#myid） 
+2.类选择器（.myclassname） 
+3. 标签选择器（div，h1，p） 
+4. 相邻选择器（h1 + p） 相邻兄弟选择器（Adjacent sibling selector）可选择紧接在另一元素后的元素，且二者有相同父元素.
+5. 子选择器（ul > li） 
+6. 后代选择器（li a） 
+7. 通配符选择器（* ）
+8. 属性选择器（ a[rel = "external"]） 
+9. 伪类选择器（a: hover, li: nth - child） 
+10. element1~element2 选择器 element1 之后出现的所有 element2    
 
 ```
 //为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。) 
