@@ -264,7 +264,8 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
 在编写HTML5 文档时我倾向于在老式编写风格（可读性和精简代码找到平衡）
 
 <link href="CSS/main.css" rel="stylesheet"/>
-## HTML5 标签嵌套多个
+## HTML5 标签嵌套多个 
+
 ```
 <h2><a href="index.html">The home page</a></h2>
 <p><a href="index.html">This paragraph also links to the home page</a></p>
@@ -319,8 +320,9 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
     </header>
 </article>
 ```
-## HTML5 文本级语义元素
-> <b>……一小段文本，纯粹为了吸引人的注意，除此之外不传达任何重要性，也不暗示其他语态或语气，
+## HTML5 文本级语义元素 
+
+<b>……一小段文本，纯粹为了吸引人的注意，除此之外不传达任何重要性，也不暗示其他语态或语气，
 如文档摘要中的关键词、评论中的产品名称、交互式文本软件中的可操作单词，或者文章的导语。 
 根据过去对< b >标签的用法，很多浏览器仍会将其渲染为粗体。所以你可以根据实际情况在相关的CSS 代码中重定义其默认样式。
 <em>强调内容中的重点。
@@ -328,11 +330,12 @@ normalize.css）、polyfill 和一些必要的工具如Modernizr。它还包含�
 标明不同特点的文字。 渲染成斜体，可以重写样式
 
 ## 遵循WAI-ARIA 实现无障碍站点
-> WAI-ARIA 是Web Accessibility Initiative - Accessible Rich Internet Applications 的缩写，指无障碍网页应用技术，
+WAI-ARIA 是Web Accessibility Initiative - Accessible Rich Internet Applications 的缩写，指无障碍网页应用技术，
 它主要解决一个问题：让残障人士能无障碍地访问网页上的动态内容。这种技术提供了一种描述自定义组件（网页应用中的动态片段）的角色、
 状态和属性的方法，这样这些组件就可以被依赖辅助技术的用户找到并加以利用。
 
-## ARIA地标属性：role=”“
+## ARIA地标属性：role=”“ 
+
 application：用来定义用作网页应用的区域。
 banner：用来定义一个站点级别（而不是某个特定文档的）的区域。如网站的头部和logo。
 complementary：用来定义一个对页面主要区域进行补充说明的区域。
@@ -341,12 +344,14 @@ form：你猜都能猜到，定义表单！但注意，如果表单用于搜索�
 main：定义页面的主体内容。
 navigation：用来定义链向当前文档或相关文档的导航链接。
 search：用来定义一个用于搜索的区域。
-设置样式nav[role=""] {}
+设置样式nav[role=""] {} 
+
 ## HTML5 嵌入媒体
-> 最初的 HTML5 规范呼吁所有浏览器内置支持使用Ogg 格式①直接播放视频或音频（无需插件）。但是由于HTML5 工作组的内部争议，
+最初的 HTML5 规范呼吁所有浏览器内置支持使用Ogg 格式①直接播放视频或音频（无需插件）。但是由于HTML5 工作组的内部争议，
 曾经作为基线标准的支持Ogg（包括Theora video 和Vorbis audio）的主张在最近更新的HTML5 规范中被放弃。因此目前的情况是，
 一些浏览器支持某一套视频和音频文件格式，而另一些浏览器则支持其他格式。例如Safari 只允许在和元素中使用MP4/H.264/AAC 媒体文件，
 而Firefox 和Opera 则只支持Ogg 和WebM。 
+
 ```
 在一个标签内支持多种媒体格式
 <video width="640" height="480" controls autoplay preload="auto" loopposter="myVideoPoster.jpg">
@@ -355,6 +360,7 @@ search：用来定义一个用于搜索的区域。
 What, do you mean you don't understand HTML5?
 </video>
 ```
+
 ## 针对老版本浏览器的备用方案
 ```
 <video width="640" height="480" controls autoplay preload="auto" loop poster=
@@ -376,7 +382,7 @@ Ogg Format: <a href="myVideo.ogv">"Ogg"</a>
 </video>
 ```
 ## 响应式视频
-> video { max-width: 100%; height: auto; }
+ video { max-width: 100%; height: auto; }
 
 ### 能解决使用iframe 嵌入的视频的响应问题
 ```
@@ -431,9 +437,10 @@ manifest 文件必须以CACHE MANIFEST 开头。
 CACHE:部分罗列了所有离线使用所需的文件。这些文件的路径都是相对offline.manifest而言的
 NETWORK:部分罗列了所有不需要被缓存的文件。星号被称为在线白名单通配符。
 FALLBACK:部分使用/字符定义了一个URL 模板。它的作用是访问每个页面时都会问“缓存中有这个页面吗？”，如果有则显示缓存页面，如果没有则显示指定的offline.html 文件。 
-版本号的作用 
-> 如果开发者对网站内容或资源做了修改，那么也得通知浏览器更新缓存文 
-件，否则浏览器仍然会使用之前已有的缓存文件。而通知浏览器更新缓存文件的方式通常是更新manifest 文件， 
+版本号的作用  
+
+> 如果开发者对网站内容或资源做了修改，那么也得通知浏览器更新缓存文件，
+否则浏览器仍然会使用之前已有的缓存文件。而通知浏览器更新缓存文件的方式通常是更新manifest 文件， 
 浏览器如果发现manifest 文件发生了变化，就会更新缓存文件。大多数情况下manifest 中的缓存文件清单不会发 
 生变化，那我们就通过修改注释的方式来改变manifest 文件，注释中的版本号，既能触发文件变化，又能指明当 
 前版本，一举两得。其实注释中还可以加入更新时间等更详细信息，有助于维护。
@@ -467,12 +474,7 @@ NETWORK:
 9）伪类选择器（a: hover, li: nth - child）
 10）element1~element2 选择器 element1 之后出现的所有 element2 
 
-> 为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。)
-```
-p~ul
-{
-background:#ff0000;
-}
-```
-> “选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素”。
-``` h1 + p {margin-top:50px;} ```
+** 为所有相同的父元素中位于 p 元素之后的所有 ul 元素设置背景：(选择前面有 <p> 元素的每个 <ul> 元素。)**
+`p~ul {background:#ff0000;}`
+** 选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素。 **
+ ` h1 + p {margin-top:50px;} `
