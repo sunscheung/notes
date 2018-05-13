@@ -29,7 +29,8 @@ var Person = new function (name) {
 }('Tom');
 //还可以这样定义它：
 // var sayHi = new Function("sName", "sMessage", "alert(\"Hello \" + sName + sMessage);");
-//虽然由于字符串的关系，这种形式写起来有些困难，但有助于理解函数只不过是一种引用类型，它们的行为与用 Function 类明确创建的函数行为是相同的。
+//虽然由于字符串的关系，这种形式写起来有些困难，但有助于理解函数只不过是一种引用类型，
+//它们的行为与用 Function 类明确创建的函数行为是相同的。
 var Person = new Function ('name', 'return name');  
 console.log( Person('Tom') ); //Tom 
 ```
@@ -65,22 +66,21 @@ return obj;
 ```
 第一行，创建一个空对象obj。
 第二行，将这个空对象的__proto__成员指向了构造函数对象的prototype成员对象，这是最关键的一步，具体细节将在下文描述。
-第三行，将构造函数的作用域赋给新对象，因此CA函数中的this指向新对象obj，然后再调用Person函数。于是我们就给obj对象赋值了一个成员变量name，这个成员变量的值是'tom'。
+第三行，将构造函数的作用域赋给新对象，因此CA函数中的this指向新对象obj，然后再调用Person函数。
+于是我们就给obj对象赋值了一个成员变量name，这个成员变量的值是'tom'。
 第四行，返回新对象obj。当构造函数里包含返回语句时情况比较特殊，这种情况会在下文中说到。
-
 
 ## 正确定义JavaScript构造函数
 
 不同于其它的主流编程语言，JavaScript的构造函数并不是作为类的一个特定方法存在的；
-当任意一个普通函数用于创建一类对象时，它就被称作构造函数，或构造器。一个函数要作为一个真正意义上的构造函数，需要满足下列条件：
+当任意一个普通函数用于创建一类对象时，它就被称作构造函数，或构造器。
+一个函数要作为一个真正意义上的构造函数，需要满足下列条件：
+1. 在函数内部对新对象（this）的属性进行设置，通常是添加属性和方法。
 
-1、 在函数内部对新对象（this）的属性进行设置，通常是添加属性和方法。
-
-2、 构造函数可以包含返回语句（不推荐），但返回值必须是this，或者其它非对象类型的值。
-
+2. 构造函数可以包含返回语句（不推荐），但返回值必须是this，或者其它非对象类型的值。
 上文定义的构造函数Person就是一个标准的、简单的构造函数。
 下面例子定义的函数Animal返回了一个对象，我们可以使用new表达式来调用它，该表达式可以正确返回一个对象：
-	
+```	
 function Animal(){
     var o = {
         name:'it is a Animal' 
@@ -89,14 +89,13 @@ function Animal(){
 }
 var o1 = new Animal();
 console.log(o1.name);//it is a Animal
-
+```
 但这种方式并不是值得推荐的方式，因为对象o1的原型是函数Animal内部定义的对象o的原型，也就是Object.prototype。
 这种方式相当于执行了正常new表达式的前三步，而在第四步的时候返回了Animal函数的返回值。该方式同样不便于创建大量相同类型的对象，
 不利于使用继承等高级特性，并且容易造成混乱，应该摒弃。
 
 一个构造函数在某些情况下完全可以作为普通的功能函数来使用，这是JavaScript灵活性的一个体现。下例定义的Animal2就是一个“多用途”函数：
-
-	
+```	
 function Add(a, b){
     this.num = a + b;
     this.addFn = function(){
@@ -107,7 +106,7 @@ function Add(a, b){
 var getAdd = new Add(2,3);
 getAdd.addFn();//结果为5
 alert(getAdd(2, 3)); //结果为5
-
+```
 该函数既可以用作构造函数来构造一个对象，也可以作为普通的函数来使用。用作普通函数时，它接收两个参数，并返回两者的相加的结果。
 为了代码的可读性和可维护性，建议作为构造函数的函数不要掺杂除构造作用以外的代码；同样的，一般的功能函数也不要用作构造对象。
 
@@ -117,11 +116,12 @@ alert(getAdd(2, 3)); //结果为5
 根据上文的定义，在表面上看来，构造函数似乎只是对一个新创建的对象进行初始化，增加一些成员变量和方法；
 然而构造函数的作用远不止这些。为了说明使用构造函数的意义，我们先来回顾一下前文提到的例子。
 执行var obj = new Person();创建对象的时候，发生了四件事情：
+```
 var obj  = {};
 obj.__proto__ = Person.prototype;
 Person.call(obj);
 return obj;
-
+```
 我们说最重要的是第二步，将新生成的对象的__prop__属性赋值为构造函数的prototype属性，
 使得通过构造函数创建的所有对象可以共享相同的原型。这意味着同一个构造函数创建的所有对象都继承自一个相同的对象，
 因此它们都是同一个类的对象。在JavaScript标准中，并没有__prop__这个属性，
@@ -165,14 +165,14 @@ var myArray = [1,2,3];
 ```
  
 这招对于简单的对象是管用的，涉及到继承或者跨窗口等复杂情况时，可能就没那么灵光了：
-	
+```	
 function f() { this.foo = 1;}
 function s() { this.bar = 2; }
 s.prototype = new f(); // s继承自f
 var son = new s(); // 用构造函数s创建一个子类对象
 (son.constructor == s); // false
 (son.constructor == f); // true
-
+```
 这样的结果可能跟你的预期不相一致，所以使用constructor属性的时候一定要小心，或者干脆不要用它。
 这里实在是让人难以理解。
 
@@ -293,6 +293,5 @@ A.prototype.sayWhat = 'say what...';
 var a = new A('dreamapple');
 console.log(JSON.stringify(a));//{"name":"dreamapple"}
 ```
-
 
 
