@@ -17,7 +17,7 @@
 在开发应用程序的时候，以求更好的管理应用程序的复杂性，基于**职责分离（Speration of Duties）**的思想都会对应用程序进行分层。
 在开发图形界面应用程序的时候，会把管理用户界面的层次称为View，应用程序的数据为Model（注意这里的Model指的是Domain Model，
 这个应用程序对需要解决的问题的数据抽象，不包含应用的状态，可以简单理解为对象）。Model提供数据操作的接口，执行相应的业务逻辑。
-(https://camo.githubusercontent.com/1f3484dd4f02f0f99de460e2f1a4ff487bbee1b4/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6775692e706e67)
+![image](https://camo.githubusercontent.com/1f3484dd4f02f0f99de460e2f1a4ff487bbee1b4/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6775692e706e67)
 
 有了View和Model的分层，那么问题就来了：View如何同步Model的变更，View和Model之间如何粘合在一起。
 
