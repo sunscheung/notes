@@ -33,7 +33,7 @@ Smalltalk-80 MVC和GoF描述的MVC是最经典的MVC模式。
 ### MVC的依赖关系
 MVC出了把应用程序分成View、Model层，还额外的加了一个Controller层，它的职责为进行Model和View之间的协作（路由、输入预处理等）的
 应用逻辑（application logic）；Model进行处理业务逻辑。Model、View、Controller三个层次的依赖关系如下：
-(https://camo.githubusercontent.com/8de6460e4d41c88ad2cf5432caae6b10f82d196e/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76632d6465702e706e67)
+![image](https://camo.githubusercontent.com/8de6460e4d41c88ad2cf5432caae6b10f82d196e/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76632d6465702e706e67)
 
 Controller和View都依赖Model层，Controller和View可以互相依赖。在一些网上的资料Controller和View之间的依赖关系可能不一样，
 有些是单向依赖，有些是双向依赖，这个其实关系不大，后面会看到它们的依赖关系都是为了把处理用户行为触发的事件处理权交给Controller。
@@ -44,7 +44,7 @@ Controller会对来自View数据进行预处理、决定调用哪个Model的接�
 会通过观察者模式（Observer Pattern）通知View；View通过观察者模式收到Model变更的消息以后，会向Model请求最新的数据，然后重新更新界面。
 如下图：
 
-(https://camo.githubusercontent.com/b89ac314c2fd554e7bf33ba1553e10dd91be44fc/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76632d63616c6c2e706e67)
+![image](https://camo.githubusercontent.com/b89ac314c2fd554e7bf33ba1553e10dd91be44fc/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76632d63616c6c2e706e67)
 
 看似没有什么特别的地方，但是由几个需要特别关注的关键点：
 
@@ -68,7 +68,7 @@ View无法组件化。View是强依赖特定的Model的，如果需要把这个V
 ## MVC Model 2
 在Web服务端开发的时候也会接触到MVC模式，而这种MVC模式不能严格称为MVC模式。经典的MVC模式只是解决客户端图形界面应用程序的问题，而对服务端无效。
 服务端的MVC模式又自己特定的名字：MVC Model 2，或者叫JSP Model 2，或者直接就是Model 2 。Model 2客户端服务端的交互模式如下：
-(https://camo.githubusercontent.com/f42953394daf02d3515e6482c0e099c05ae508c8/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d6f64656c322e706e67)
+![image](https://camo.githubusercontent.com/f42953394daf02d3515e6482c0e099c05ae508c8/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d6f64656c322e706e67)
 
 服务端接收到来自客户端的请求，服务端通过路由规则把这个请求交由给特定的Controller进行处理，Controller执行相应的应用逻辑，对Model进行操作，
 Model执行业务逻辑以后；然后用数据去渲染特定的模版，返回给客户端。
@@ -77,7 +77,7 @@ Model执行业务逻辑以后；然后用数据去渲染特定的模版，返回
 所以可以看到经典的Smalltalk-80 MVC中Model通过观察者模式告知View更新这一环被无情地打破，不能称为严格的MVC。
 
 Model 2模式最早在1998年应用在JSP应用程序当中，JSP Model 1应用管理的混乱诱发了JSP参考了客户端MVC模式，催生了Model 2。
-(https://camo.githubusercontent.com/72de7a4e8054e95ede1f0d167b603119a82efec1/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6a73702e706e67)
+![image](https://camo.githubusercontent.com/72de7a4e8054e95ede1f0d167b603119a82efec1/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6a73702e706e67)
 
 后来这种模式几乎被应用在所有语言的Web开发框架当中。PHP的ThinkPHP，Python的Dijango、Flask，NodeJS的Express，Ruby的RoR，
 基本都采纳了这种模式。平常所讲的MVC基本是这种服务端的MVC。
@@ -94,12 +94,12 @@ MVP模式是MVC模式的改良。在上个世纪90年代，IBM旗下的子公司
 
 MVP（Passive View）的依赖关系
 MVP模式把MVC模式中的Controller换成了Presenter。MVP层次之间的依赖关系如下：
-(https://camo.githubusercontent.com/9b97a7927aad77433d8d965101db17e8515e91d3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d6465702e706e67)
+![image](https://camo.githubusercontent.com/9b97a7927aad77433d8d965101db17e8515e91d3/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d6465702e706e67)
 MVP打破了View原来对于Model的依赖，其余的依赖关系和MVC模式一致。
 
 ### MVP（Passive View）的调用关系
 既然View对Model的依赖被打破了，那View如何同步Model的变更？看看MVP的调用关系：
-(https://camo.githubusercontent.com/082052805716330b7c168b8bcd968ffb085b4c21/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d63616c6c2e706e67)
+![image](https://camo.githubusercontent.com/082052805716330b7c168b8bcd968ffb085b4c21/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d63616c6c2e706e67)
 
 和MVC模式一样，用户对View的操作都会从View交移给Presenter。Presenter会执行相应的应用程序逻辑，并且对Model进行相应的操作；而这时候Model执行完业务逻辑以后，也是通过观察者模式把自己变更的消息传递出去，但是是传给Presenter而不是View。Presenter获取到Model变更的消息以后，通过View提供的接口更新界面。
 
@@ -127,7 +127,7 @@ MVP（Supervising Controller）
 上面讲的是MVP的Passive View模式，该模式下View非常Passive，它几乎什么都不知道，Presenter让它干什么它就干什么。而Supervising Controller模式中，Presenter会把一部分简单的同步逻辑交给View自己去做，Presenter只负责比较复杂的、高层次的UI操作，所以可以把它看成一个Supervising Controller。
 
 Supervising Controller模式下的依赖和调用关系：
-(https://camo.githubusercontent.com/83d207d438e9f95741e6ab57a122728867e13383/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d73632e706e67)
+![image](https://camo.githubusercontent.com/83d207d438e9f95741e6ab57a122728867e13383/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76702d73632e706e67)
 
 因为Supervising Controller用得比较少，对它的讨论就到这里为止。
 
@@ -144,7 +144,7 @@ MVVM代表的是Model-View-ViewModel，这里需要解释一下什么是ViewMode
 
 ### MVVM的依赖
 MVVM的依赖关系和MVP依赖，只不过是把P换成了VM。
-(https://camo.githubusercontent.com/208d64a1323b628ccab177d0fac2fb4dc8541619/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76766d2d6465702e706e67)
+![image](https://camo.githubusercontent.com/208d64a1323b628ccab177d0fac2fb4dc8541619/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76766d2d6465702e706e67)
 
 MVVM的调用关系
 MVVM的调用关系和MVP一样。但是，在ViewModel当中会有一个叫Binder，或者是Data-binding engine的东西。
@@ -152,7 +152,7 @@ MVVM的调用关系和MVP一样。但是，在ViewModel当中会有一个叫Bind
 指令式地声明View上的显示的内容是和Model的哪一块数据绑定的。当ViewModel对进行Model更新的时候，Binder会自动把数据更新到View上去，
 当用户对View进行操作（例如表单输入），Binder也会自动把数据更新到Model上去。这种方式称为：Two-way data-binding，双向数据绑定。
 可以简单而不恰当地理解为一个模版引擎，但是会根据数据变更实时渲染。
-(https://camo.githubusercontent.com/61ef7578cd46b1d37dd3ea52ce0a3be570e427cc/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76766d2d63616c6c2e706e67)
+![image](https://camo.githubusercontent.com/61ef7578cd46b1d37dd3ea52ce0a3be570e427cc/687474703a2f2f6c69766f7261732e6769746875622e696f2f626c6f672f6d76632f6d76766d2d63616c6c2e706e67)
 
 也就是说，MVVM把View和Model的同步逻辑自动化了。以前Presenter负责的View和Model同步不再手动地进行操作，而是交由框架所提供的Binder进行负责。只需要告诉Binder，View显示的数据对应的是Model哪一部分即可。
 
