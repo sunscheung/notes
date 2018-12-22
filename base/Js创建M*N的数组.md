@@ -1,5 +1,13 @@
 # 创建数组
 ## 创建M*N的数组
+// new Array
+```
+function createMnArray(m,n){
+	var arr = new Array(m);
+	arr.fill(n);
+	return arr;
+}
+```
 // 循环
 ```
 function createMnArray(m,n){
