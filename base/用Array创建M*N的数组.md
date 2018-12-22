@@ -26,11 +26,13 @@ console.log(createMnArray(4, 5));
 // Es6语法创建
 ```
 function createMnArray(m,n){
-  return Array.from({length: m}, (v, i) => n); // v指Array.from生成的数组默认值-undefine，i指索引，m-数组长度，n-传进的数组值
+  // v指Array.from生成的数组默认值-undefine，i指索引，m-数组长度，n-传进的数组值
+  return Array.from({length: m}, (v, i) => n); 
 }
 var tempArray = createMnArray(4,5); // 创建M*N的数组
 ```
-## 衍生: 随机生成一个长度为n的数组
+## 衍生: 随机生成一个长度为n值在[min-max]范围内数组
+
 1. 随机生成长度为n，且值在[min-max]范围内
 function getRandomArr(n, min, max) {
     var arr = [];
