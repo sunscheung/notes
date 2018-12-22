@@ -54,10 +54,10 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
 在1.2.2中，我们看到了一个陌生的字眼——AST，上网一搜：
 在计算机科学中，抽象语法树（Abstract Syntax Tree，AST），或简称语法树（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。比如，嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；而类似于 if-condition-then 这样的条件跳转语句，可以使用带有两个分支的节点来表示。  --维基百科
 其实，你只要记着，AST是一棵树，像这样：
-![image](https://github.com/sunscheung/notes/tree/master/imgs/AST.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/AST.png)
 
 转换成AST的目的就是将我们书写的字符串文件转换成计算机更容易识别的数据结构，这样更容易提取其中的关键信息，而这棵树在计算机上的表现形式，其实就是一个单纯的Object。
-![image](https://github.com/sunscheung/notes/tree/master/imgs/AST-tree.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/AST-tree.png)
 
 示例是一个简单的声明赋值语句，经过AST转化后各部分内容的含义就更为清晰明了了。
 #### 1.2.4.webpack输出结果解析
@@ -311,11 +311,11 @@ module.exports = function(content){
 }
 ```
 这样，loader会去匹配所有以.js后缀结尾的文件并在内容前追加{};这样一段代码，我们可以在输出文件中看到效果：
-![loader1]("https://github.com/sunscheung/notes/tree/master/imgs/loader1.png")
+![loader1](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader1.png)
 所以，拿到了文件内容，你想对字符串进行怎样得处理都由你自定义～你可以引入babel库加个 babel(content) ，这样就实现了编译，也可以引入uglifyjs对文件内容进行字符串压缩，一切工作都由你自己定义。
 ### 2.2.Loader实战常用技巧
 #### 2.2.1.拿到loader的用户自定义配置
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader2.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader2.png)
 在我们在webpack.config.js书写loader配置时，经常会见到 options 这样一个配置项，这就是webpack为用户提供的自定义配置，在我们的loader里，如果要拿到这样一个配置信息，只需要使用这个封装好的库 loader-utils 就可以了：
 ```
 const loaderUtils = require("loader-utils");
@@ -377,7 +377,7 @@ module.exports = function(content){
 更老版本的node同此。
 #### 2.2.4.loaders的执行顺序
 还记得我们配置CSS编译时写的loader嘛，它们是长这样的：
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader3.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader3.png)
 在很多时候，我们的 use 里不只有一个loader，这些loader的执行顺序是从后往前的，你也可以把它理解为这个loaders数组的出栈过程。
 #### 2.2.5.loader缓存
 webpack增量编译机制会观察每次编译时的变更文件，在默认情况下，webpack会对loader的执行结果进行缓存，这样能够大幅度提升构建速度，不过我们也可以手动关闭它（虽然我不知道为什么要关闭它，既然留了这么个API就蛮介绍下吧，欢迎补充），示例代码如下：
@@ -563,7 +563,7 @@ module.exports = {
 }
 ```
 输出结果就是这样：
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader4.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader4.png)
 我们拿到了call方法传入的数据，并且成功在environment时机里成功输出了。
 ## 3.4.实战剖析
 来看一看已经被众人玩坏的 html-webpack-plugin ，我们发现在readme底部有这样一段demo：
@@ -590,11 +590,11 @@ MyPlugin.prototype.apply = function (compiler) {
 module.exports = MyPlugin
 ```
 如果你认真读完了上个板块的内容，你会发现，这个 htmlWebpackPluginAfterHtmlProcessing 不就是这个插件自己挂载在webpack事件流上的自定义事件嘛，它会在生成输出文件准备注入HTML时调用你自定义的回调，并向回调里传入本次编译后生成的资源文件的相关信息以及待注入的HTML文件的内容（字符串形式）供我们自定义操作。在项目搜一下这个钩子：
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader6.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader6.png)
 这不和我们在3.2里说的一样嘛，先实例化我们所需要的hook，从名字就可以看出来只有第一个是同步钩子，另外几个都是异步钩子。然后再找找事件的广播：
 
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader7.png)
-![image](https://github.com/sunscheung/notes/tree/master/imgs/loader8.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader7.png)
+![image](https://raw.githubusercontent.com/sunscheung/notes/master/imgs/loader8.png)
 
 和我们刚刚介绍的一模一样对吧，只不过异步钩子使用promise方法去广播，其他不就完全是我们自定义事件的流程。大家如果有兴趣可以去打下console看看 htmlWebpackPluginAfterHtmlProcessing 这个钩子向回调传入的数据，或许你能发现一片新大陆哦。
 
