@@ -43,7 +43,7 @@ Tapable的具体内容可以参照文章：[《webpack4.0源码分析之Tapable�
 因为webpack4重写了事件流机制，所以如果我们翻阅 [webpack hook](https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Fapi%2Fcompiler-hooks%2F) 的官方文档会发现信息特别繁杂，但是在实际使用中，我们只需要记住几个重要的事件就足够了。
 #### 1.2.2.webpack运行流程详解
 在讲解webpack流程之前先附上一张我自己绘制的执行流程图：
-![image](https://github.com/sunscheung/notes/tree/master/imgs/webpack流程.png)
+[image](https://github.com/sunscheung/notes/tree/master/imgs/webpack流程.png)
 
 首先，webpack会读取你在命令行传入的配置以及项目里的 webpack.config.js 文件，初始化本次构建的配置参数，并且执行配置文件中的插件实例化语句，生成Compiler传入plugin的apply方法，为webpack事件流挂上自定义钩子。
 接下来到了entryOption阶段，webpack开始读取配置的Entries，递归遍历所有的入口文件
