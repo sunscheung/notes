@@ -1,21 +1,28 @@
-随着前端工程化的不断发展，构建工具也在不断完善。作为大前端时代的新宠，webpack渐渐成为新时代前端工程师不可或缺的构建工具，随着webpack4的不断迭代，我们享受着构建效率不断提升带来的快感，配置不断减少的舒适，也一直为重写的构建事件钩子机制煞费苦心，为插件各种不兼容心灰意冷，虽然过程痛苦，但结果总是美好的。经历了一番繁琐的配置后，我常常会想，这样一个精巧的工具，在构建过程中做了什么？我也是抱着这样的好奇，潜心去翻阅相关书籍和官方文档，终于对其中原理有所了解，那么现在，就让我们一起来逐步揭开webpack这个黑盒的神秘面纱，探寻其中的运行机制吧。
-本文将以三部分内容：Webpack运行机制、编写自定义webpack loader、编写自定义webpack plugin 直击webpack原理痛点，开启你通向高级前端工程师之路～
-本次webpack系列文章可参照项目：github.com/jerryOnlyZR… 。
-本系列文章使用的webpack版本为4，如有其他版本问题可提issue或者直接在文章下方的评论区留言。
-1.Webpack运行机制
-1.1.webpack运行机制概述
+# Webpack揭秘——走向高阶前端的必经之路
+
+> 随着前端工程化的不断发展，构建工具也在不断完善。作为大前端时代的新宠，webpack渐渐成为新时代前端工程师不可或缺的构建工具，随着webpack4的不断迭代，我们享受着构建效率不断提升带来的快感，配置不断减少的舒适，也一直为重写的构建事件钩子机制煞费苦心，为插件各种不兼容心灰意冷，虽然过程痛苦，但结果总是美好的。经历了一番繁琐的配置后，我常常会想，这样一个精巧的工具，在构建过程中做了什么？我也是抱着这样的好奇，潜心去翻阅相关书籍和官方文档，终于对其中原理有所了解，那么现在，就让我们一起来逐步揭开webpack这个黑盒的神秘面纱，探寻其中的运行机制吧。
+
+> 本文将以三部分内容：Webpack运行机制、编写自定义webpack loader、编写自定义webpack plugin 直击webpack原理痛点，开启你通向高级前端工程师之路～
+本次webpack系列文章可参照项目：[demo](https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FjerryOnlyZRJ%2Fwebpack-loader)。
+
+> 本系列文章使用的webpack版本为4，如有其他版本问题可提issue或者直接在文章下方的评论区留言。
+
+## 1.Webpack运行机制
+
+### 1.1.webpack运行机制概述
 在阅读本文之前，我就默认电脑前的你已经掌握了webpack的基本配置，能够独立搭建一款基于webpack的前端自动化构建体系，所以这篇文章不会教你如何配置或者使用webpack，自然具体概念我就不做介绍了，直面主题，开始讲解webpack原理。
 webpack的运行过程可以简单概述为如下流程：
 初始化配置参数 -> 绑定事件钩子回调 -> 确定Entry逐一遍历 -> 使用loader编译文件 -> 输出文件
 接下来，我们将对具体流程逐一介绍。
-1.2.webpack运行流程
-1.2.1.webpack事件流初探
+### 1.2.webpack运行流程
+#### 1.2.1.webpack事件流初探
 在分析webpack运行流程时，我们可以借助一个概念，便是webpack的事件流机制。
-什么是webpack事件流？
+> 什么是webpack事件流？
 Webpack 就像一条生产线，要经过一系列处理流程后才能将源文件转换成输出结果。 这条生产线上的每个处理流程的职责都是单一的，多个流程之间有存在依赖关系，只有完成当前处理后才能交给下一个流程去处理。 插件就像是一个插入到生产线中的一个功能，在特定的时机对生产线上的资源做处理。
 Webpack 通过 Tapable 来组织这条复杂的生产线。 Webpack 在运行过程中会广播事件，插件只需要监听它所关心的事件，就能加入到这条生产线中，去改变生产线的运作。 Webpack 的事件流机制保证了插件的有序性，使得整个系统扩展性很好。     --吴浩麟《深入浅出webpack》
 我们将webpack事件流理解为webpack构建过程中的一系列事件，他们分别表示着不同的构建周期和状态，我们可以像在浏览器上监听click事件一样监听事件流上的事件，并且为它们挂载事件回调。我们也可以自定义事件并在合适时机进行广播，这一切都是使用了webpack自带的模块 Tapable 进行管理的。我们不需要自行安装 Tapable ，在webpack被安装的同时它也会一并被安装，如需使用，我们只需要在文件里直接 require 即可。
 Tapable的原理其实就是我们在前端进阶过程中都会经历的EventEmit，通过发布者-订阅者模式实现，它的部分核心代码可以概括成下面这样：
+```
 class SyncHook{
     constructor(){
         this.hooks = [];
@@ -31,18 +38,19 @@ class SyncHook{
         this.hooks.forEach(hook => hook(...arguments));
     }
 }
-复制代码Tapable的具体内容可以参照文章：《webpack4.0源码分析之Tapable》 。其使用方法我们会在后文中的“3.编写自定义webpack plugin”模块再做深入介绍。
-因为webpack4重写了事件流机制，所以如果我们翻阅 webpack hook 的官方文档会发现信息特别繁杂，但是在实际使用中，我们只需要记住几个重要的事件就足够了。
-1.2.2.webpack运行流程详解
+```
+Tapable的具体内容可以参照文章：[《webpack4.0源码分析之Tapable》] (https://juejin.im/post/5abf33f16fb9a028e46ec352)。其使用方法我们会在后文中的“3.编写自定义webpack plugin”模块再做深入介绍。
+因为webpack4重写了事件流机制，所以如果我们翻阅 [webpack hook](https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Fapi%2Fcompiler-hooks%2F) 的官方文档会发现信息特别繁杂，但是在实际使用中，我们只需要记住几个重要的事件就足够了。
+#### 1.2.2.webpack运行流程详解
 在讲解webpack流程之前先附上一张我自己绘制的执行流程图：
-
+![流程图]("./imgs/webpack流程.png")
 
 首先，webpack会读取你在命令行传入的配置以及项目里的 webpack.config.js 文件，初始化本次构建的配置参数，并且执行配置文件中的插件实例化语句，生成Compiler传入plugin的apply方法，为webpack事件流挂上自定义钩子。
 接下来到了entryOption阶段，webpack开始读取配置的Entries，递归遍历所有的入口文件
 Webpack进入其中一个入口文件，开始compilation过程。先使用用户配置好的loader对文件内容进行编译（buildModule），我们可以从传入事件回调的compilation上拿到module的resource（资源路径）、loaders（经过的loaders）等信息；之后，再将编译好的文件内容使用acorn解析生成AST静态语法树（normalModuleLoader），分析文件的依赖关系逐个拉取依赖模块并重复上述过程，最后将所有模块中的require语法替换成__webpack_require__来模拟模块化操作。
 emit阶段，所有文件的编译及转化都已经完成，包含了最终输出的资源，我们可以在传入事件回调的compilation.assets 上拿到所需数据，其中包括即将输出的资源、代码块Chunk等等信息。
 
-1.2.3.什么是AST?
+#### 1.2.3.什么是AST?
 在1.2.2中，我们看到了一个陌生的字眼——AST，上网一搜：
 在计算机科学中，抽象语法树（Abstract Syntax Tree，AST），或简称语法树（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。比如，嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；而类似于 if-condition-then 这样的条件跳转语句，可以使用带有两个分支的节点来表示。  --维基百科
 其实，你只要记着，AST是一棵树，像这样：
@@ -50,8 +58,9 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
 转换成AST的目的就是将我们书写的字符串文件转换成计算机更容易识别的数据结构，这样更容易提取其中的关键信息，而这棵树在计算机上的表现形式，其实就是一个单纯的Object。
 
 示例是一个简单的声明赋值语句，经过AST转化后各部分内容的含义就更为清晰明了了。
-1.2.4.webpack输出结果解析
+#### 1.2.4.webpack输出结果解析
 接下来，我们来看看webpack的输出内容。如果我们没有设置splitChunk，我们只会在dist目录下看到一个main.js输出文件，过滤掉没用的注释还有一些目前不需要去考虑的Funciton，得到的代码大概是下面这样：
+```
 (function (modules) {
   //  缓存已经加载过的module的exports
   //  module在exports之前还是有js需要执行的，缓存的目的就是优化这一过程
@@ -113,11 +122,13 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
       eval("{};var s = 123;\nconsole.log(s);\nmodule.exports = {\n  s: s\n};\n\n//# sourceURL=webpack:///./src/module.js?");
     }
   });
-复制代码我们都知道其实webpack在浏览器实现模块化的本质就是将所有的代码都注入到同一个JS文件里，现在我们可以清晰明了地看出webpack最后生成的也不过只是一个IIFE，我们引入的所有模块都被一个function给包起来组装成一个对象，这个对象作为IIFE的实参被传递进去。
+```
+我们都知道其实webpack在浏览器实现模块化的本质就是将所有的代码都注入到同一个JS文件里，现在我们可以清晰明了地看出webpack最后生成的也不过只是一个IIFE，我们引入的所有模块都被一个function给包起来组装成一个对象，这个对象作为IIFE的实参被传递进去。
 但如果我们配置了splitChunk，这时候输出的文件就和你的Chunk挂钩了，代码也变了模样：
  //@file: dist/common/runtime.js
  // 当配置了splitChunk之后，此时IIFE的形参modules就成了摆设，
  // 真正的module还有chunk都被存放在了一个挂载在window上的全局数组`webpackJsonp`上了
+ ```
  (function(modules) { // webpackBootstrap
 	 // install a JSONP callback for chunk loading
 	 /**
@@ -231,7 +242,9 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
  	// run deferred modules from other chunks
  	checkDeferredModules();
  })([]);
-复制代码//@file: dist/common/utils.js
+ ```
+ ```
+/@file: dist/common/utils.js
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common/utils"], {
   "./src/index.js": function (module, __webpack_exports__, __webpack_require__) {
     "use strict";
@@ -241,9 +254,11 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
     eval("{};var s = 123;\nconsole.log(s);\nmodule.exports = {\n  s: s\n};\n\n//# sourceURL=webpack:///./src/module.js?");
   }
 }]);
+```
 复制代码这时候，IIFE的形参也变成了摆设，所有我们的模块都被放在了一个名为 webpackJsonp 的全局数组上，通过IIFE里的 webpackJsonpCallback 来处理数据。
-1.3.总结
+## 1.3.总结
 纵观webpack构建流程，我们可以发现整个构建过程主要花费时间的部分也就是递归遍历各个entry然后寻找依赖逐个编译的过程，每次递归都需要经历 String->AST->String 的流程，经过loader还需要处理一些字符串或者执行一些JS脚本，介于node.js单线程的壁垒，webpack构建慢一直成为它饱受诟病的原因。这也是happypack之所以能大火的原因，我们可以来看一段happypack的示例代码:
+```
 // @file: webpack.config.js
 const HappyPack = require('happypack');
 const os = require('os');
@@ -267,9 +282,10 @@ module.exports = {
     })
   ]
 };
-复制代码大家如果有用过pm2的话就能很容易明白了，其实原理是一致的，都是利用了node.js原生的cluster模块去开辟多进程执行构建，不过在4之后大家就可以不用去纠结这一问题了，多进程构建已经被集成在webpack本身上了，除了增量编译，这也是4之所以能大幅度提升构建效率的原因之一。
-2.编写自定义webpack loader
-2.1.让webpack loader现出原型
+```
+大家如果有用过pm2的话就能很容易明白了，其实原理是一致的，都是利用了node.js原生的cluster模块去开辟多进程执行构建，不过在4之后大家就可以不用去纠结这一问题了，多进程构建已经被集成在webpack本身上了，除了增量编译，这也是4之所以能大幅度提升构建效率的原因之一。
+## 2.编写自定义webpack loader
+### 2.1.让webpack loader现出原型
 在webpack中，真正起编译作用的便是我们的loader，也就是说，平时我们进行babel的ES6编译，SCSS、LESS等编译都是在loader里面完成的，在你不知道loader的本质之前你一定会觉得这是个很高大上的东西，正如计算机学科里的编译原理一样，里面一定有许多繁杂的操作。但实际上，loader只是一个普通的funciton，他会传入匹配到的文件内容(String)，你只需要对这些字符串做些处理就好了。一个最简单的loader大概是这样：
 /**
  * loader Function
@@ -347,11 +363,11 @@ module.exports = function(content){
     })
 }
 复制代码更老版本的node同此。
-2.2.4.loaders的执行顺序
+#### 2.2.4.loaders的执行顺序
 还记得我们配置CSS编译时写的loader嘛，它们是长这样的：
 
 在很多时候，我们的 use 里不只有一个loader，这些loader的执行顺序是从后往前的，你也可以把它理解为这个loaders数组的出栈过程。
-2.2.5.loader缓存
+#### 2.2.5.loader缓存
 webpack增量编译机制会观察每次编译时的变更文件，在默认情况下，webpack会对loader的执行结果进行缓存，这样能够大幅度提升构建速度，不过我们也可以手动关闭它（虽然我不知道为什么要关闭它，既然留了这么个API就蛮介绍下吧，欢迎补充），示例代码如下：
 module.exports = function(content){
     //关闭loader缓存
@@ -378,8 +394,8 @@ module.exports.pitch = (remaining, preceding, data) => {
 }
 复制代码2.3.总结
 通过上述介绍，我们明白了，loader其实就是一个“平平无奇”的Funtion，能够传入本次匹配到的文件内容供我们自定义修改。
-3.编写自定义webpack plugin
-3.1.温习一下webpack事件流
+## 3.编写自定义webpack plugin
+### 3.1.温习一下webpack事件流
 还记得我们在前文讲到的webpack事件流，你还记得webpack有哪些常用的事件吗？webpack插件起到的作用，就是为这些事件挂载回调，或者执行指定脚本。
 我们在文章里也提到，webpack的事件流是通过 Tapable 实现的，它就和我们的EventEmit一样，是这一系列的事件的生成和管理工具，它的部分核心代码就像下面这样：
 class SyncHook{
@@ -400,7 +416,7 @@ class SyncHook{
 复制代码在 webpack hook 上的所有钩子都是 Tapable 的示例，所以我们可以通过 tap 方法监听事件，使用 call 方法广播事件，就像官方文档介绍的这样：
 compiler.hooks.someHook.tap(/* ... */);
 复制代码几个比较常用的hook我们也已经在前文介绍过了，如果大家不记得了，可以回过头再看看哦～
-3.2.什么是webpack plugin
+### 3.2.什么是webpack plugin
 如果剖析webpack plugin的本质，它实际上和webpack loader一样简单，其实它只是一个带有apply方法的class。
 //@file: plugins/myplugin.js
 class myPlugin {
@@ -427,7 +443,7 @@ module.exports = {
 复制代码大家现在肯定也都想起来了，每次我们需要使用某个plugin的时候都需要new一下实例化，自然，实例过程中传递的参数，也就成为了我们的构造函数里拿到的options了。
 而实例化所有plugin的时机，便是在webpack初始化所有参数的时候，也就是事件流开始的时候。所以，如果配合 shell.js 等工具库，我们就可以在这时候执行文件操作等相关脚本，这就是webpack plugin所做的事情。
 如果你想在指定时机执行某些脚本，自然可以使用在webpack事件流上挂载回调的方法，在回调里执行你所需的操作。
-3.3.Tapable新用
+### 3.3.Tapable新用
 如果我们想赋予webpack事件流我们的自定义事件能够实现嘛？
 答案当然是必须可以啊老铁！
 自定义webpack事件流事件需要几步？四步：
@@ -515,7 +531,7 @@ module.exports = {
 复制代码输出结果就是这样：
 
 我们拿到了call方法传入的数据，并且成功在environment时机里成功输出了。
-3.4.实战剖析
+## 3.4.实战剖析
 来看一看已经被众人玩坏的 html-webpack-plugin ，我们发现在readme底部有这样一段demo：
 function MyPlugin(options) {
   // Configure your plugin with options...
