@@ -43,7 +43,7 @@ Tapable的具体内容可以参照文章：[《webpack4.0源码分析之Tapable�
 因为webpack4重写了事件流机制，所以如果我们翻阅 [webpack hook](https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Fapi%2Fcompiler-hooks%2F) 的官方文档会发现信息特别繁杂，但是在实际使用中，我们只需要记住几个重要的事件就足够了。
 #### 1.2.2.webpack运行流程详解
 在讲解webpack流程之前先附上一张我自己绘制的执行流程图：
-![流程图]("./imgs/webpack流程.png")
+![流程图]("../imgs/webpack流程.png")
 
 首先，webpack会读取你在命令行传入的配置以及项目里的 webpack.config.js 文件，初始化本次构建的配置参数，并且执行配置文件中的插件实例化语句，生成Compiler传入plugin的apply方法，为webpack事件流挂上自定义钩子。
 接下来到了entryOption阶段，webpack开始读取配置的Entries，递归遍历所有的入口文件
@@ -54,8 +54,10 @@ emit阶段，所有文件的编译及转化都已经完成，包含了最终输�
 在1.2.2中，我们看到了一个陌生的字眼——AST，上网一搜：
 在计算机科学中，抽象语法树（Abstract Syntax Tree，AST），或简称语法树（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。比如，嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；而类似于 if-condition-then 这样的条件跳转语句，可以使用带有两个分支的节点来表示。  --维基百科
 其实，你只要记着，AST是一棵树，像这样：
+![AST]("../imgs/AST.png")
 
 转换成AST的目的就是将我们书写的字符串文件转换成计算机更容易识别的数据结构，这样更容易提取其中的关键信息，而这棵树在计算机上的表现形式，其实就是一个单纯的Object。
+![AST]("../imgs/AST-tree.png")
 
 示例是一个简单的声明赋值语句，经过AST转化后各部分内容的含义就更为清晰明了了。
 #### 1.2.4.webpack输出结果解析
@@ -307,7 +309,7 @@ module.exports = function(content){
        }
 }
 复制代码这样，loader会去匹配所有以.js后缀结尾的文件并在内容前追加{};这样一段代码，我们可以在输出文件中看到效果：
-
+![AST]("../imgs/loader.png")
 所以，拿到了文件内容，你想对字符串进行怎样得处理都由你自定义～你可以引入babel库加个 babel(content) ，这样就实现了编译，也可以引入uglifyjs对文件内容进行字符串压缩，一切工作都由你自己定义。
 2.2.Loader实战常用技巧
 2.2.1.拿到loader的用户自定义配置
