@@ -18,7 +18,7 @@ webpack配置中需要理解几个核心的概念Entry 、Output、Loaders 、Pl
     单页：只有一个入口( index.html )，页面中需要引入打包后的所有静态文件，
     所有的页面内容全由 JavaScript 控制
     【注意】上面说的入口指的都是最终打包到dist目录下的 html 文件，而我们在这里配置的 entry 其实是需要被 html 引入的js模块，这些js模块、连同抽离的公共js模块最终还需要利用 html-webpack-plugin 这个插件组合到html文件中：
-    ``
+    ```
     // 1....
     const config = require('./config'); // 多页面的配置项
     let HTMLPlugins = [];
@@ -60,11 +60,11 @@ webpack配置中需要理解几个核心的概念Entry 、Output、Loaders 、Pl
       ]
       // ...
     }
-    ``
+    ```
 
 2. 出口(output): 告诉webpack如何命名输出的文件以及输出的目录属性告诉 webpack 在哪里输出它所创建的 bundles，以及如何命名这些文件，主输出文件默认为 ./dist/main.js，其他生成文件的默认输出目录是 ./dist。
     配置出口的文件名和路径：
-    ``
+    ```
     module.exports = {
       entry: Entries,
       output: {
@@ -72,7 +72,7 @@ webpack配置中需要理解几个核心的概念Entry 、Output、Loaders 、Pl
         path: path.resolve(__dirname, '../dist'),
       },
     }
-    ``
+    ```
     // 这里将生成的js文件挂上8位的MD5戳，以充分利用CDN缓存。
 
 3. Loaders: 作为开箱即用的自带特性，webpack自身只支持JavaScript。而loader能够让 webpack处理那些非 JavaScript文件，并且先将它们转换为有效模块，然后添加到依赖图中，这样就可以提供给应用程序使用。---loader 用于对模块的源代码进行转换，负责把某种文件格式的内容转换成 webpack 可以支持打包的模块，例如将sass预处理转换成 css 模块；将 TypeScript 转换成 JavaScript；或将内联图像转换为 data URL等
@@ -126,7 +126,7 @@ webpack配置中需要理解几个核心的概念Entry 、Output、Loaders 、Pl
       我们不需要自行安装 Tapable ，在webpack被安装的同时它也会一并被安装，如需使用，我们只需要在文件里直接 require 即可。
       Tapable的原理其实就是我们在前端进阶过程中都会经历的EventEmit，
       通过发布者-订阅者模式实现，它的部分核心代码可以概括成下面这样：
-      ``
+      ```
       class SyncHook{
           constructor(){
               this.hooks = [];
@@ -142,7 +142,7 @@ webpack配置中需要理解几个核心的概念Entry 、Output、Loaders 、Pl
               this.hooks.forEach(hook => hook(...arguments));
           }
       }
-      ``
+      ```
       Tapable的具体内容可以参照文章：
       [《webpack4.0源码分析之Tapable》](https://juejin.im/post/5abf33f16fb9a028e46ec352)。
       其使用方法我们会在后文中的“3.编写自定义webpack plugin”模块再做深入介绍。
