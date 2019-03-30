@@ -1,0 +1,1 @@
+打开mongo配置cmd
