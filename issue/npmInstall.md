@@ -15,6 +15,7 @@ set SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ && npm install no
 或者设置全局镜像源：
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
 之后再涉及到 node-sass 的安装时就会从淘宝镜像下载。
+【补充】如果还报错，可能是因为安装的版本需要rebuild才能生效 npm rebuild node-sass
 ```
 解决方法二：使用 cnpm
 另外，使用 cnpm 安装 node-sass 会默认从淘宝镜像源下载，也是一个办法(也可以解决安装 chromedriver 失败的问题)：
